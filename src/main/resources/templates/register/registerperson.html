@@ -1,17 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Title</title>
 </head>
 <body>
-<form action="saveperson" method="post">
-    <label>Nome</label>
-    <input name="name">
+    <form action="saveperson" method="post" th:object="${person}">
+        <label>Id</label>
+        <input name="id" th:field="*{id}" readonly="readonly">
 
-    <label>Sobrenome</label>
-    <input name="surname">
-    <input type="submit" value="Salvar">
-</form>
+        <label>Nome</label>
+        <input name="name" th:field="*{name}">
+
+        <label>Sobrenome</label>
+        <input name="surname" th:field="*{surname}">
+        <input class="waves-effect waves-light btn" type="submit" value="Salvar">
+    </form>
+
+    <a href="/listing-people">Listagem de Pessoas</a>
+
+    <table>
+        <tr th:each = "person : ${people}">
+            <td th:text="${person.id}"></td>
+            <td th:text="${person.name}"></td>
+            <td th:text="${person.surname}"></td>
+            <td><a th:href="@{/person-edit/{idperson}(idperson=${person.id})}">Editar</a></td>
+            <td><a th:href="@{/person-delete/{idperson}(idperson=${person.id})}">Excluir</a></td>
+        </tr>
+    </table>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 </body>
 </html>
