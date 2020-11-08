@@ -91,6 +91,7 @@ public class PersonController {
 
         ModelAndView modelAndView = new ModelAndView("register/phones");
         modelAndView.addObject("person", person.get());
+        modelAndView.addObject("phones", phoneRepository.getPhonePerson(idperson));
 
         return modelAndView;
     }
@@ -103,7 +104,7 @@ public class PersonController {
 
         ModelAndView modelAndView = new ModelAndView("register/phones");
         modelAndView.addObject("person", person);
-
+        modelAndView.addObject("phones", phoneRepository.getPhonePerson(idperson));
         return modelAndView;
     }
 
