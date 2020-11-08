@@ -24,14 +24,14 @@
     <div th:each="p: ${person}">
         <div class="row">
             <p>Id: <span th:text="${p.id}"></span></p>
-            <p>Id: <span th:text="${p.name}"></span></p>
-            <p>Id: <span th:text="${p.surname}"></span></p>
+            <p>Nome: <span th:text="${p.name}"></span></p>
+            <p>Sobrenome: <span th:text="${p.surname}"></span></p>
         </div>
     </div>
 
     <h5>Telefones</h5>
     <div class="row">
-        <form class="col s12" th:action="@{/addPhone/{idperson}(idperson=${person.id})}" method="post">
+        <form class="col s12" th:action="@{/addPhone/{idperson}(idperson=${person.id})}" method="post" th:object="${phoneObj}">
             <div class="row">
                 <div class="input-field col s6">
                     <label class="active" for="number">Número</label>
@@ -52,6 +52,7 @@
         <tr th:each="phone : ${phones}">
             <td th:text="${phone.number}"></td>
             <td th:text="${phone.type}"></td>
+            <td><a th:href="@{/remove-phone/{idphone}(idphone=${phone.id})}">Excluir</a></td>
         </tr>
     </table>
 

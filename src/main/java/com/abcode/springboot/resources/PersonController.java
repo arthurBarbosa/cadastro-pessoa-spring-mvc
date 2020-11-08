@@ -6,7 +6,10 @@ import com.abcode.springboot.repository.PersonRepository;
 import com.abcode.springboot.repository.PhoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
@@ -97,7 +100,7 @@ public class PersonController {
     }
 
     @PostMapping("/addPhone/{idperson}")
-    public ModelAndView addPhone(Phone phone, @PathVariable("idperson") Long idperson){
+    public ModelAndView addPhone(Phone phone, @PathVariable("idperson") Long idperson) {
         Person person = personRepository.findById(idperson).get();
         phone.setPerson(person);
         phoneRepository.save(phone);
@@ -108,8 +111,24 @@ public class PersonController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/remove-phone/{idphone}")
+    public ModelAndView deletePhone(@PathVariable("idphone") Long idphone) {
+
+        Person person = phoneRepository.findById(idphone).get().getPerson();
+
+        phoneRepository.deleteById(idphone);
+
+        ModelAndView modelAndView = new ModelAndView("register/phones");
+        modelAndView.addObject("person", person);
+        modelAndView.addObject("phones", phoneRepository.getPhonePerson(person.getId()));
+
+        return modelAndView;
+    }
+
+
     private void clearForm(ModelAndView modelAndView) {
         modelAndView.addObject("person", new Person());
     }
+
 
 }

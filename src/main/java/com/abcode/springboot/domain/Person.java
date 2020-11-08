@@ -21,7 +21,7 @@ public class Person implements Serializable {
 
     private String surname;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Phone> phones;
 
 }
