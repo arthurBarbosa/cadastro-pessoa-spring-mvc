@@ -5,23 +5,21 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
-@Entity
 @Data
+@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Person implements Serializable {
+public class Phone implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String number;
 
-    private String surname;
+    private String type;
 
-    @OneToMany(mappedBy = "person")
-    private List<Phone> phones;
-
+    @ManyToOne
+    private Person person;
 }

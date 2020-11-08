@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+        form input[type=submit]{
+            color: white;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body>
+    <h3>Sistema de Gerenciamento</h3>
+    <h5>Cadastro de Pessoa</h5>
+    <a href="/registerperson">Cadastro Pessoa</a>
+    <div th:each="p: ${person}">
+        <div class="row">
+            <p>Id: <span th:text="${p.id}"></span></p>
+            <p>Id: <span th:text="${p.name}"></span></p>
+            <p>Id: <span th:text="${p.surname}"></span></p>
+        </div>
+    </div>
+
+    <h5>Telefones</h5>
+    <div class="row">
+        <form class="col s12" th:action="@{/addPhone/{idperson}(idperson=${person.id})}" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <label class="active" for="number">Número</label>
+                    <input class="validate" id="number" name="number">
+                </div>
+
+                <div class="input-field col s6">
+                    <label class="active" for="type">Tipo</label>
+                    <input class="validate" id="type" name="type">
+                </div>
+
+                <input class="waves-effect waves-light btn" type="submit" value="Salvar">
+            </div>
+        </form>
+    </div>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+</body>
+</html>

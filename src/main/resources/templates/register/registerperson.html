@@ -10,37 +10,71 @@
     <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+        form input[type=submit]{
+            color: white;
+        }
+    </style>
     <title>Title</title>
 </head>
 <body>
-    <form action="saveperson" method="post" th:object="${person}">
-        <label>Id</label>
-        <input name="id" th:field="*{id}" readonly="readonly">
+    <h3>Sistema de Gerenciamento</h3>
+    <h5>Cadastro de Pessoa</h5>
+    <div class="row">
+        <form id="formPerson" class="col-s12" action="saveperson" method="post" th:object="${person}">
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="id">Id</label>
+                    <input  name="id" th:field="*{id}" id="id" readonly="readonly">
+                </div>
 
-        <label>Nome</label>
-        <input name="name" th:field="*{name}">
+                <div class="input-field col s6">
+                    <label for="name" class="active">Nome</label>
+                    <input name="name" th:field="*{name}" id="name">
+                </div>
 
-        <label>Sobrenome</label>
-        <input name="surname" th:field="*{surname}">
-        <input class="waves-effect waves-light btn" type="submit" value="Salvar">
-    </form>
+                <div class="input-field col s12">
+                    <label class="active" for="surname">Sobrenome</label>
+                    <input name="surname" th:field="*{surname}" id="surname">
+                </div>
+            </div>
+
+            <div class="input-field col s6">
+                <input class="waves-effect waves-light btn" type="submit" value="Salvar">
+                <button class="waves-effect waves-light btn" onclick="document.getElementById('formPerson').reset();">Novo</button>
+            </div>
+        </form>
+    </div>
 
     <br>
     <br>
-    <a href="/listing-people">Listagem de Pessoas</a>
-    <br>
-    <br>
 
-    <form action="name" method="post">
-        <label>Pesquisar por nome:</label>
-        <input name="name">
-        <input class="waves-effect waves-light btn" type="submit" value="Buscar">
-    </form>
+    <div class="row">
+        <form class="col s12" action="name" method="post">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label class="active" for="nameSearch">Pesquisar por nome:</label>
+                    <input class="validate" name="name" id="nameSearch">
+                    <input class="waves-effect waves-light btn" type="submit" value="Buscar">
+                    <a href="/listing-people">Listagem de Pessoas</a>
+                </div>
+            </div>
+        </form>
+    </div>
 
-    <table>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Editar</th>
+            <th>Excluir</th>
+        </tr>
+        </thead>
         <tr th:each = "person : ${people}">
             <td th:text="${person.id}"></td>
-            <td th:text="${person.name}"></td>
+            <td><a th:href="@{/phones/{idperson}(idperson=${person.id})}"><span th:text="${person.name}"></span></a></td>
             <td th:text="${person.surname}"></td>
             <td><a th:href="@{/person-edit/{idperson}(idperson=${person.id})}">Editar</a></td>
             <td><a th:href="@{/person-delete/{idperson}(idperson=${person.id})}">Excluir</a></td>
