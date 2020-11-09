@@ -6,12 +6,17 @@ import com.abcode.springboot.repository.PersonRepository;
 import com.abcode.springboot.repository.PhoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,7 +40,22 @@ public class PersonController {
     }
 
     @PostMapping(value = "**/saveperson")
-    public ModelAndView save(Person person) {
+    public ModelAndView save(@Valid Person person, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("register/registerperson");
+            Iterable<Person> people = personRepository.findAll();
+            modelAndView.addObject("people", people);
+            modelAndView.addObject("people", person);
+
+            List<String> msg = new ArrayList<>();
+            for (ObjectError objectError : bindingResult.getAllErrors()) {
+                msg.add(objectError.getDefaultMessage());
+            }
+
+            modelAndView.addObject("msg", msg);
+            return modelAndView;
+        }
         personRepository.save(person);
 
         ModelAndView andView = new ModelAndView("register/registerperson");
