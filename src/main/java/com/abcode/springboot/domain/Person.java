@@ -29,7 +29,7 @@ public class Person implements Serializable {
     @Positive(message = "Idade não pode ser menor ou igual a zero.")
     private int age;
 
-    @OneToMany(mappedBy = "person", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person")
     private List<Phone> phones;
 
 }

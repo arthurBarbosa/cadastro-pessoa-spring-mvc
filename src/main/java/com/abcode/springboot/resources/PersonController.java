@@ -56,11 +56,12 @@ public class PersonController {
             modelAndView.addObject("msg", msg);
             return modelAndView;
         }
-        personRepository.save(person);
+
 
         ModelAndView andView = new ModelAndView("register/registerperson");
         Iterable<Person> people = personRepository.findAll();
         andView.addObject("people", people);
+        personRepository.save(person);
         clearForm(andView);
 
         return andView;
@@ -119,7 +120,7 @@ public class PersonController {
         return modelAndView;
     }
 
-    @PostMapping("/addPhone/{idperson}")
+    @PostMapping("**/addPhone/{idperson}")
     public ModelAndView addPhone(Phone phone, @PathVariable("idperson") Long idperson) {
         Person person = personRepository.findById(idperson).get();
         phone.setPerson(person);
